@@ -1,3 +1,11 @@
+import { Container } from "@mantine/core";
+import Carousel from "../components/Carousel/Carousel";
+import HeroSection from "../components/HeroSection/HeroSection";
+
 export default function HomePage() {
-  return <div>Home page</div>;
+  return (
+    <Container p={0} size={"xl"} fluid>
+      <HeroSection />
+    </Container>
+  );
 }
