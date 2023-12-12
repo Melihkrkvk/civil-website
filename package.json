@@ -12,6 +12,10 @@
     "@mantine/core": "7.3.1",
     "@mantine/hooks": "7.3.1",
     "@tabler/icons-react": "^2.44.0",
+<<<<<<< HEAD
+=======
+    "clsx": "^2.0.0",
+>>>>>>> main
     "keen-slider": "^6.8.6",
     "next": "13.4.4",
     "react": "18.2.0",
