@@ -1,6 +1,7 @@
 import { Box, Button, Card, Group, Paper, Text, Title } from "@mantine/core";
 import classes from "./HeroSection.module.css";
 import Carousel from "../Carousel/Carousel";
+import WelcomeCard from "../Card/WelcomeCard/WelcomeCard";
 
 const HeroSection = () => {
   return (
@@ -43,8 +44,23 @@ const HeroSection = () => {
           </Button>
         </Paper>
       </Group>
-      <Group pos={"absolute"} right={20} bottom={10}>
-        <Carousel />
+      <Group
+        pos={"absolute"}
+        /* bg={"red"} */
+        w={1000}
+        h={1000}
+        right={50}
+        bottom={10}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          <WelcomeCard />
+        </div>
       </Group>
     </Box>
   );
