@@ -17,74 +17,198 @@ import {
   ScrollArea,
   rem,
   useMantineTheme,
-  Container,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconNotification,
-  IconCode,
+  IconCheck,
   IconBook,
   IconChartPie3,
   IconFingerprint,
   IconCoin,
   IconChevronDown,
+  TablerIconsProps,
 } from "@tabler/icons-react";
 import classes from "./Header.module.css";
 import Link from "next/link";
 import Toggler from "../Toggler/Toggler";
-import { usePathname } from "next/navigation";
-import path from "path";
+import { headerMenu } from "../../utils/mock";
+import { mobileData } from "../../utils/mock";
 
-const mockdata = [
-  {
-    title: "Anasayfa",
-    link: "/",
-    color: "red",
-  },
-  {
-    title: "Hakkımızda",
-    link: "/hakkimizda",
-    color: "green",
-  },
-  {
-    title: "İletişim",
-    link: "/iletisim",
-    color: "purple",
-  },
-];
-export default function Header() {
+const Header = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
-  const pathname = usePathname();
 
-  const links = mockdata.map((item: any, index: any) => (
-    <Anchor
-      data-text={item.title}
-      className={classes.link}
-      style={{ "--mantine-color-red-5": item.color }}
-      key={index}
-      component={Link}
-      href={item.link}
-      data-active={pathname === item.link || undefined}
-    >
-      {item.title}
-    </Anchor>
-  ));
+  const menuLinks = headerMenu
+    .map((item, index) => {
+      const megaMenuItems = item.megaMenuLinks?.map((item, key) => {
+        return (
+          <UnstyledButton className={classes.subLink} key={key}>
+            <Group wrap="nowrap" align="flex-start">
+              <ThemeIcon size={34} variant="default" radius="md">
+                <item.icon
+                  style={{ width: rem(22), height: rem(22) }}
+                  color={theme.colors.blue[6]}
+                />
+              </ThemeIcon>
+              <div>
+                <Text size="sm" fw={500}>
+                  {item.title}
+                </Text>
+                <Text size="xs" c="dimmed">
+                  {item.description}
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        );
+      });
+
+      if (item.isMega) {
+        return (
+          <>
+            <HoverCard
+              width={600}
+              position="bottom"
+              radius="md"
+              shadow="md"
+              withinPortal
+            >
+              <HoverCard.Target>
+                <a href="#" className={classes.link}>
+                  <Center inline>
+                    <Box component="span" mr={5}>
+                      {item.label}
+                    </Box>
+                    <IconChevronDown
+                      style={{ width: rem(16), height: rem(16) }}
+                      color={theme.colors.blue[6]}
+                    />
+                  </Center>
+                </a>
+              </HoverCard.Target>
+
+              <HoverCard.Dropdown style={{ overflow: "hidden" }}>
+                <Group justify="space-between" px="md">
+                  <Text fw={500}>{item.megaMenuSettings?.title}</Text>
+                  <Anchor href={item.megaMenuSettings?.viewAllLink} fz="xs">
+                    {item.megaMenuSettings?.viewAllTitle}
+                  </Anchor>
+                </Group>
+
+                <Divider my="sm" />
+
+                <SimpleGrid cols={2} spacing={0}>
+                  {megaMenuItems}
+                </SimpleGrid>
+
+                <div className={classes.dropdownFooter}>
+                  <Group justify="space-between">
+                    <div>
+                      <Text fw={500} fz="sm">
+                        {item.megaMenuSettings?.footerTitle}
+                      </Text>
+                      <Text size="xs" c="dimmed">
+                        {item.megaMenuSettings?.footerDescp}
+                      </Text>
+                    </div>
+                    <Button variant="default">
+                      {item.megaMenuSettings?.footerButtonTitle}
+                    </Button>
+                  </Group>
+                </div>
+              </HoverCard.Dropdown>
+            </HoverCard>
+          </>
+        );
+      }
+      return (
+        <>
+          <Link href={item.link} className={classes.link}>
+            {item.label}
+          </Link>
+        </>
+      );
+    })
+    .flat();
+
+  const mobileMenuLinks = mobileData
+    .map((item, index) => {
+      const megaMenuItems = item.megaMenuLinks?.map((item, key) => {
+        return (
+          <UnstyledButton className={classes.subLink} key={key}>
+            <Group wrap="nowrap" align="flex-start">
+              <ThemeIcon size={34} variant="default" radius="md">
+                <item.icon
+                  style={{ width: rem(22), height: rem(22) }}
+                  color={theme.colors.blue[6]}
+                />
+              </ThemeIcon>
+              <div>
+                <Text size="sm" fw={500}>
+                  {item.title}
+                </Text>
+                <Text size="xs" c="dimmed">
+                  {item.description}
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        );
+      });
+
+      if (item.isMega) {
+        return (
+          <>
+            <UnstyledButton
+              key={index}
+              className={classes.link}
+              onClick={toggleLinks}
+            >
+              <Center inline>
+                <Box component="span" mr={5}>
+                  {item.label}
+                </Box>
+                <IconChevronDown
+                  style={{ width: rem(16), height: rem(16) }}
+                  color={"theme.colors.orange[5]"}
+                />
+              </Center>
+            </UnstyledButton>
+            <Collapse in={linksOpened}>{megaMenuItems}</Collapse>
+          </>
+        );
+      }
+      return (
+        <>
+          <Link href={item.link} className={classes.link}>
+            {item.label}
+          </Link>
+        </>
+      );
+    })
+    .flat();
 
   return (
-    <header className={classes.header}>
-      <Group justify="space-between" h="100%">
-        LOGO
-        <Group gap={30} visibleFrom="sm">
-          {links}
+    <Box pb={0}>
+      <header className={classes.header}>
+        <Group justify="space-between" h="100%">
+          Logo
+          <Group h="100%" gap={0} visibleFrom="sm">
+            {menuLinks}
+          </Group>
+          <Group>
+            <Toggler />
+            <Burger
+              opened={drawerOpened}
+              onClick={toggleDrawer}
+              hiddenFrom="sm"
+            />
+          </Group>
         </Group>
-        <Group mr={20} visibleFrom="sm">
-          <Toggler />
-        </Group>
-        <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
-      </Group>
+      </header>
 
       <Drawer
         opened={drawerOpened}
@@ -94,17 +218,14 @@ export default function Header() {
         hiddenFrom="sm"
         zIndex={1000000}
       >
-        <Container h={"100vh"} className={classes.mobileDrawer}>
-          <div
-            style={{
-              display: "flex",
-              backgroundColor: "red",
-              justifyContent: "space-between",
-            }}
-          ></div>
-          {links}
-        </Container>
+        <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
+          <Divider my="sm" />
+          {mobileMenuLinks}
+          <Divider my="sm" />
+          {/* mobile button area */}
+        </ScrollArea>
       </Drawer>
-    </header>
+    </Box>
   );
-}
+};
+export default Header;
