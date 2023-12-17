@@ -1,0 +1,15 @@
+.section {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  height: 500px;
+  padding-top: 30px;
+  gap: 20px;
+  position: relative;
+
+  @media (max-width: 60em) {
+    background-color: yellow;
+    flex-direction: column;
+    height: 600px;
+  }
+}

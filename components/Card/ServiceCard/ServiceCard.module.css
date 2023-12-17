@@ -1,0 +1,36 @@
+.card {
+  position: relative;
+  background-color: red;
+  height: 180px;
+  width: 450px;
+  transition: 0.5s;
+  overflow: hidden;
+  @media (max-width: 60em) {
+    width: 100dvw;
+  }
+}
+@media (hover: hover) {
+  .card:hover {
+    height: 450px;
+  }
+}
+@media (hover: none) {
+  .card {
+    width: 100%;
+  }
+  .card:hover {
+    height: 450px;
+  }
+}
+
+.icon {
+  z-index: 10;
+  position: absolute;
+  left: 35%;
+  width: 150px;
+  height: 150px;
+  top: -60px;
+  border: 1px solid;
+  transform: translateY(0%);
+  transition: 0.5s;
+}

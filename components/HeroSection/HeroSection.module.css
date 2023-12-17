@@ -1,7 +1,7 @@
 .box {
   width: 100dvw;
   min-height: 100dvh;
-  background: linear-gradient(#eefff9 0%, #ffccc1 49%, #dcdbff 100%);
+  background: linear-gradient(#eefff9 0%, #ffccc1 49%, #fff 100%);
   padding: 0 10%;
   display: flex;
   justify-content: center;
@@ -14,6 +14,9 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  @media (max-width: 60em) {
+    z-index: 1;
+  }
 }
 
 .title {
@@ -26,6 +29,10 @@
     -8px 8px 0 #222, -10px 10px 0 #222, -10px 10px 0 #222, -12px 12px 0 #222,
     -14px 14px 0 #222, -16px 16px 0 #222, -18px 18px 20px #ffccc1,
     -18px 18px 30px #ffccc1, -18px 18px 50px #ffccc1, -18px 18px 150px #ffccc1;
+  @media (max-width: 60em) {
+    z-index: 1;
+    font-size: 100px;
+  }
 }
 
 .title:nth-child(2) {
@@ -77,10 +84,23 @@
 .subTitle {
   font-size: 8vw;
   line-height: 11vw;
+  @media (max-width: 60em) {
+    z-index: 1;
+    position: absolute;
+    bottom: 32%;
+    font-size: 18vw;
+    line-height: 20vw;
+  }
 }
 
 .btn_container {
   margin: 20px 0;
+  @media (max-width: 60em) {
+    z-index: 1;
+    position: absolute;
+    bottom: 15%;
+    left: 1/2;
+  }
 }
 
 .image {
@@ -88,4 +108,19 @@
   right: -30%;
   width: 80%;
   bottom: 0px;
+  @media (max-width: 60em) {
+    left: 0;
+    right: 0;
+    z-index: 0;
+    top: 0;
+    height: 100%;
+  }
+}
+
+.descp {
+  @media (max-width: 60em) {
+    z-index: 1;
+    position: absolute;
+    bottom: 10px;
+  }
 }

@@ -62,7 +62,7 @@ const HeroSection = () => {
           Hakkımızda daha fazla
         </Button>
       </div>
-      <Text fw={500} maw={700}>
+      <Text className={classes.descp} fw={500} maw={700}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
         exercitationem sapiente dolor libero accusamus sint molestiae ex
         nesciunt natus cupiditate!
