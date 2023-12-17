@@ -34,8 +34,10 @@ import Link from "next/link";
 import Toggler from "../Toggler/Toggler";
 import { headerMenu } from "../../utils/mock";
 import { mobileData } from "../../utils/mock";
+import { useWindowScroll } from "@mantine/hooks";
 
 const Header = () => {
+  const [scroll] = useWindowScroll();
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
@@ -136,22 +138,22 @@ const Header = () => {
 
   const mobileMenuLinks = mobileData
     .map((item, index) => {
-      const megaMenuItems = item.megaMenuLinks?.map((item, key) => {
+      const megaMenuItems = item.megaMenuLinks?.map((megaLinks, key) => {
         return (
-          <UnstyledButton className={classes.subLink} key={key}>
+          <UnstyledButton className={classes.subLink} key={megaLinks.title}>
             <Group wrap="nowrap" align="flex-start">
               <ThemeIcon size={34} variant="default" radius="md">
-                <item.icon
+                <megaLinks.icon
                   style={{ width: rem(22), height: rem(22) }}
                   color={theme.colors.blue[6]}
                 />
               </ThemeIcon>
               <div>
                 <Text size="sm" fw={500}>
-                  {item.title}
+                  {megaLinks.title}
                 </Text>
                 <Text size="xs" c="dimmed">
-                  {item.description}
+                  {megaLinks.description}
                 </Text>
               </div>
             </Group>
@@ -163,7 +165,7 @@ const Header = () => {
         return (
           <>
             <UnstyledButton
-              key={index}
+              key={item.label + index}
               className={classes.link}
               onClick={toggleLinks}
             >
@@ -183,7 +185,11 @@ const Header = () => {
       }
       return (
         <>
-          <Link href={item.link} className={classes.link}>
+          <Link
+            key={item.label + index}
+            href={item.link}
+            className={classes.link}
+          >
             {item.label}
           </Link>
         </>
@@ -192,8 +198,11 @@ const Header = () => {
     .flat();
 
   return (
-    <Box pb={0}>
-      <header className={classes.header}>
+    <Box>
+      <header
+        style={{ background: scroll.y > 0 ? "#eefff9" : "transparent" }}
+        className={classes.header}
+      >
         <Group justify="space-between" h="100%">
           Logo
           <Group h="100%" gap={0} visibleFrom="sm">

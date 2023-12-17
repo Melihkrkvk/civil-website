@@ -1,13 +1,17 @@
 .header {
+  position: fixed;
+  z-index: 10;
+  width: 100dvw;
   height: rem(60px);
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
   border-bottom: rem(1px) solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    light-dark(var(--mantine-color-black), var(--mantine-color-black));
 }
 
 .link {
   display: flex;
+  position: relative;
   align-items: center;
   height: 100%;
   padding-left: var(--mantine-spacing-md);
@@ -22,10 +26,26 @@
     width: 100%;
   }
 
-  @mixin hover {
+  /*  @mixin hover {
     text-decoration: underline 2px;
     text-decoration-color: var(--mantine-color-orange-5);
-  }
+  } */
+}
+
+.link::after {
+  content: "";
+  width: 0;
+  height: 3px;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffccc1;
+  transition: width 0.3s;
+}
+
+.link:hover::after {
+  width: 70%;
 }
 
 .subLink {
